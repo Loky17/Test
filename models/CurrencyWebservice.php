@@ -1,7 +1,6 @@
 <?php
 
 /**
- * Dummy web service returning random or fixed exchange rates
  * Simula un servizio di cambio valuta restituendo tassi fissi verso EUR.
  */
 class CurrencyWebservice
