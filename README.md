@@ -1,59 +1,76 @@
-DEV CHALLENGE
-===============================
+## Descrizione
 
-### Obiettivo
+Questo progetto è una CLI in PHP che genera un report delle transazioni di un cliente, leggendo i dati da un file CSV e convertendo gli importi in EUR tramite un webservice fittizio.
 
-Dimostrare le tue competenze di programmazione ad oggetti e di preparazione
-test automatici.
+## Requisiti
+- PHP >= 8.1
+- (Opzionale) Docker
 
-### Task
+## Installazione e avvio
 
-Creare un semplice report che mostri le transazioni per un customer id
-specificato come argomento da linea di comando.
+### 1. Clona il repository
 
-Il file data.csv contiene dati di esempio in varie valute, il report dovrà
-mostrare i valori in EUR.
+```sh
+git clone <url-del-tuo-repo>
+cd <nome-cartella-progetto>
+```
 
-Assumi che la base dati sia dinamica e che i dati arrivino da un database, il
-csv è usato solo per semplicità di implementazione.
+### 2. Avvio **senza Docker**
 
-Aggiungi il codice, i test e la documentazione che ritieni opportuna
-(dockblock, commenti, README).  Non è necessario che l'applicazione utilizzi un
-webservice di cambio valuta reale, un client finto che ritorna valori random o
-fissi è sufficiente.
+Assicurati di avere PHP installato. Esegui:
 
-Il codice fornito è solo un'indicazione di massima, non è necessario
-utilizzarlo se non lo trovi utile. Se qualche requisito non ti è chiaro,
-sentiti libero di improvvisare.
+```sh
+php scripts/report.php <customer_id>
+```
+Esempio:
+```sh
+php scripts/report.php 1
+```
 
-Puoi utilizzare framework o librerie già pronte se lo ritieni opportuno. Se
-utilizzi codice di terze parti ti consigliamo di utilizzare composer.
+### 3. Avvio **con Docker**
 
-### Consegna test
+1. Costruisci l'immagine:
+   ```sh
+   docker build -t report-customer .
+   ```
+2. Esegui il report per un customer (es. id 2):
+   ```sh
+   docker run --rm report-customer 2
+   ```
 
-Il test dovrà essere pubblicato sul tuo repository (pubblico o privato che sia) 
-GitHub, GitLab, BitBucket etc. 
+## Esempio di output
 
-### Ambiente di Sviluppo
+```
+Report transazioni per customer 1
+Data         | Valore     | EUR      
+-------------+------------+-----------
+01/04/2015   | £50.00     |    57.50 €
+02/04/2015   | £11.04     |    12.70 €
+02/04/2015   | €1.00      |     1.00 €
+03/04/2015   | $23.05     |    21.21 €
+```
 
-Ti inviamo ad usare un'immagine Docker in base al linguaggio scelto. Per semplicità
-puoi usare anche Docker Compose o Docker Swarm.
+## Test
 
-### Valutazione
+- Per testare la lettura delle transazioni:
+  ```sh
+  php tests/test_customer.php
+  ```
+- Per testare la conversione:
+  ```sh
+  php tests/test_conversion.php
+  ```
+- Per test automatici con PHPUnit:
+  ```sh
+  ./vendor/bin/phpunit tests/CurrencyConverterTest.php
+  ```
 
-Il task sarà valutato sulla base del tuo utilizzo della programmazione OO,
-della dependency injection (ove opportuno) e della leggibilità e manutenibilità.
-In tal senso, la copertura con test automatici è fortemente incoraggiata.
+## Note
+- Il webservice di cambio valuta è fittizio e restituisce tassi fissi.
+- Il file CSV simula una base dati dinamica.
+- Il codice è strutturato in modo OOP e facilmente estendibile.
 
-Ti invitiamo a curare tutti gli aspetti come se si trattasse di un progetto
-pronto per andare in produzione. In tal senso, ad esempio, non consegnare file
-o codice inutilizzato, soprattutto se proveniente da framework di terze parti. 
-
-### Alternativa linguaggio (PHP o Javascript)
-
-In alternativa, se ti trovi più a tuo agio in ambiente javascript/nodejs puoi 
-realizzare una semplice API che restituisca il report richiesto tramite chiamata 
-REST/HTTP. 
-
-Anche (e soprattutto) in questo caso è indispensabile indicare nel README tutti i 
-passaggi necessari all'installazione e verifica.
+## Estensioni possibili
+- API RESTful
+- Supporto a nuove valute
+- Logging avanzato

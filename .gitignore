@@ -1,0 +1,6 @@
+/vendor/
+.env
+.vscode/
+.phpunit.result.cache
+composer.lock
+composer.json
